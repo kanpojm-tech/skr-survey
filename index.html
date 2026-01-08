@@ -546,6 +546,46 @@
             min-width: 0;
         }
 
+        .rank-select-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .rank-select-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .rank-select {
+            padding: 6px 10px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            background: white;
+            cursor: pointer;
+            min-width: 70px;
+            transition: all 0.2s;
+        }
+
+        .rank-select:hover {
+            border-color: var(--primary);
+        }
+
+        .rank-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.15);
+        }
+
+        .course-card.selected .rank-select {
+            border-color: var(--success);
+            background: white;
+        }
+
         .course-name {
             font-weight: 600;
             font-size: 0.85rem;
@@ -1004,7 +1044,7 @@
 
     <script>
         // ⚙️ ใส่ URL ของ Google Apps Script ที่นี่
-        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxVtMJ1BWmmWILG9eE2vrITr_2y8cd2fBVy5H8SHfqMbARqcfwH3OrUqhvvug1mNJ8/exec';
 
         // 📚 Course Data - ตาม TOR 135 วิชา (จัดหมวดจริง)
         const courses = [
@@ -1320,13 +1360,45 @@
                             badges += '<span class="course-badge social">Social</span>';
                         }
 
+                        // สร้าง options สำหรับ dropdown
+                        let rankOptions = '<option value="">เลือก</option>';
+                        for (let i = 1; i <= 20; i++) {
+                            const selected = (isSelected && rankIndex + 1 === i) ? 'selected' : '';
+                            rankOptions += `<option value="${i}" ${selected}>${i}</option>`;
+                        }
+
                         card.innerHTML = `
                             <div class="course-number">${course.id}</div>
                             <div class="course-info">
                                 <div class="course-name">${course.name}</div>
                                 <div class="course-badges">${badges}</div>
                             </div>
+                            <div class="rank-select-wrapper">
+                                <span class="rank-select-label">อันดับ:</span>
+                                <select class="rank-select" data-course-id="${course.id}">
+                                    ${rankOptions}
+                                </select>
+                            </div>
                         `;
+
+                        // Event listener สำหรับ dropdown
+                        const selectEl = card.querySelector('.rank-select');
+                        selectEl.addEventListener('change', (e) => {
+                            e.stopPropagation();
+                            const selectedRank = parseInt(e.target.value);
+                            if (selectedRank) {
+                                selectRankForCourse(course.id, selectedRank);
+                            } else {
+                                // ถ้าเลือก "เลือก" ให้ลบออกจาก ranking
+                                const idx = rankings.indexOf(course.id);
+                                if (idx !== -1) {
+                                    rankings[idx] = null;
+                                    updateUI();
+                                    showToast(`ลบ "${course.name}" ออกแล้ว`);
+                                }
+                            }
+                        });
+                        selectEl.addEventListener('click', (e) => e.stopPropagation());
 
                         card.addEventListener('dragstart', (e) => {
                             e.dataTransfer.setData('text/plain', JSON.stringify({ courseId: course.id }));
@@ -1335,7 +1407,9 @@
                         card.addEventListener('dragend', () => card.classList.remove('dragging'));
 
                         card.addEventListener('click', (e) => {
-                            toggleCourseSelection(course.id);
+                            if (e.target.tagName !== 'SELECT') {
+                                toggleCourseSelection(course.id);
+                            }
                         });
 
                         grid.appendChild(card);
@@ -1390,6 +1464,30 @@
                     showToast('เลือกครบ 20 อันดับแล้ว!', 'warning');
                 }
             }
+        }
+
+        function selectRankForCourse(courseId, targetRank) {
+            const targetIndex = targetRank - 1;
+            const existingIndex = rankings.indexOf(courseId);
+            
+            // ถ้าวิชานี้มีอยู่แล้วในอันดับอื่น
+            if (existingIndex !== -1) {
+                // สลับตำแหน่ง
+                const temp = rankings[targetIndex];
+                rankings[targetIndex] = courseId;
+                rankings[existingIndex] = temp;
+            } else {
+                // ถ้ามีวิชาอื่นอยู่ในอันดับนี้ ให้ลบออก
+                if (rankings[targetIndex]) {
+                    const oldCourse = allCourses.find(c => c.id === rankings[targetIndex]);
+                    showToast(`สลับกับ "${oldCourse?.name || 'วิชาเดิม'}"`, 'success');
+                }
+                rankings[targetIndex] = courseId;
+            }
+            
+            updateUI();
+            const course = allCourses.find(c => c.id === courseId);
+            showToast(`"${course?.name}" เป็นอันดับ ${targetRank}`, 'success');
         }
 
         function removeFromRanking(index) {
