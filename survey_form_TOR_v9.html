@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบสอบถามความต้องการรายวิชา สกร.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --primary-light: #2e86ab;
+            --primary-dark: #0d3d4f;
+            --accent: #e65100;
+            --accent-light: #ff8a50;
+            --success: #2e7d32;
+            --success-light: #4caf50;
+            --selected-bg: #c8e6c9;
+            --selected-border: #2e7d32;
+            --bg-cream: #faf6f0;
+            --bg-white: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-muted: #666666;
+            --border: #e0d5c7;
+            --shadow: rgba(26, 95, 122, 0.12);
+            
+            /* Category Colors */
+            --cat-1a: #bf360c;
+            --cat-1b: #ad1457;
+            --cat-1c: #6a1b9a;
+            --cat-2a: #1565c0;
+            --cat-2b: #00838f;
+            --cat-3: #2e7d32;
+            --cat-4a: #ef6c00;
+            --cat-4b: #5d4037;
+            --cat-5: #33691e;
+            --cat-6: #c62828;
+            --cat-7: #000000;
+            --cat-8: #1976d2;
+            --cat-9: #7b1fa2;
+            --cat-10: #455a64;
+            --cat-custom: #78909c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Prompt', 'Kanit', sans-serif;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, #f5efe6 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 20px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header h1 {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1::before {
+            content: "📋";
+            font-size: 1.4rem;
+        }
+
+        .header-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat-badge strong {
+            font-size: 1.15rem;
+            color: var(--accent-light);
+        }
+
+        .center-select {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .center-select label {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .center-select select {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: white;
+            color: var(--text-dark);
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 20px;
+            min-height: calc(100vh - 100px);
+        }
+
+        .left-panel {
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+            padding: 20px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            max-height: calc(100vh - 130px);
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-title::before {
+            content: "🏆";
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, rgba(46, 134, 171, 0.08) 0%, rgba(46, 134, 171, 0.03) 100%);
+            border: 1px solid rgba(46, 134, 171, 0.2);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .instructions strong {
+            color: var(--primary);
+        }
+
+        .instructions ul {
+            margin-top: 6px;
+            padding-left: 18px;
+        }
+
+        .instructions li {
+            margin-bottom: 3px;
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .ranking-slot {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            background: #f8f5f0;
+            border-radius: 8px;
+            border: 2px dashed var(--border);
+            min-height: 42px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .ranking-slot.filled {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 3px 10px rgba(46, 134, 171, 0.3);
+        }
+
+        .ranking-slot.drag-over {
+            border-color: var(--accent);
+            background: rgba(230, 81, 0, 0.1);
+            transform: scale(1.02);
+        }
+
+        .ranking-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .ranking-slot.filled .ranking-number {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .ranking-slot:nth-child(-n+3) .ranking-number {
+            background: var(--accent);
+        }
+
+        .ranking-slot.filled:nth-child(-n+3) .ranking-number {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .ranking-content {
+            flex: 1;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ranking-slot.filled .ranking-content {
+            color: white;
+            font-weight: 500;
+        }
+
+        .ranking-remove {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .ranking-slot.filled .ranking-remove {
+            display: flex;
+        }
+
+        .ranking-remove:hover {
+            background: rgba(255,0,0,0.5);
+            transform: scale(1.1);
+        }
+
+        .right-panel {
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow);
+            padding: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 18px 12px 44px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(46, 134, 171, 0.15);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 6px 12px;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .category-tab:hover {
+            border-color: var(--primary);
+            background: rgba(46, 134, 171, 0.05);
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .category-tab .count {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+        }
+
+        .category-tab.active .count {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .course-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 8px;
+            max-height: calc(100vh - 380px);
+        }
+
+        .category-section {
+            margin-bottom: 20px;
+        }
+
+        .category-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .category-header.cat-1a { background: linear-gradient(135deg, var(--cat-1a) 0%, #d84315 100%); }
+        .category-header.cat-1a-namphrik { background: linear-gradient(135deg, #8d6e63 0%, #a1887f 100%); }
+        .category-header.cat-1a-jandiew { background: linear-gradient(135deg, #f4511e 0%, #ff7043 100%); }
+        .category-header.cat-1b { background: linear-gradient(135deg, var(--cat-1b) 0%, #c2185b 100%); }
+        .category-header.cat-1c { background: linear-gradient(135deg, var(--cat-1c) 0%, #7b1fa2 100%); }
+        .category-header.cat-2a { background: linear-gradient(135deg, var(--cat-2a) 0%, #1976d2 100%); }
+        .category-header.cat-2b { background: linear-gradient(135deg, var(--cat-2b) 0%, #0097a7 100%); }
+        .category-header.cat-3 { background: linear-gradient(135deg, var(--cat-3) 0%, #388e3c 100%); }
+        .category-header.cat-4a { background: linear-gradient(135deg, var(--cat-4a) 0%, #fb8c00 100%); }
+        .category-header.cat-4b { background: linear-gradient(135deg, var(--cat-4b) 0%, #6d4c41 100%); }
+        .category-header.cat-5 { background: linear-gradient(135deg, var(--cat-5) 0%, #558b2f 100%); }
+        .category-header.cat-6 { background: linear-gradient(135deg, var(--cat-6) 0%, #e53935 100%); }
+        .category-header.cat-7 { background: linear-gradient(135deg, #212121 0%, #424242 100%); }
+        .category-header.cat-8 { background: linear-gradient(135deg, var(--cat-8) 0%, #42a5f5 100%); }
+        .category-header.cat-9 { background: linear-gradient(135deg, var(--cat-9) 0%, #9c27b0 100%); }
+        .category-header.cat-10 { background: linear-gradient(135deg, var(--cat-10) 0%, #607d8b 100%); }
+        .category-header.cat-china { background: linear-gradient(135deg, #b71c1c 0%, #c62828 100%); }
+
+        .category-header .course-count {
+            background: rgba(255,255,255,0.25);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-left: auto;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+        }
+
+        .course-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .course-card:hover {
+            border-color: var(--primary-light);
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .course-card.selected {
+            border-color: var(--selected-border);
+            border-width: 3px;
+            background: var(--selected-bg);
+            box-shadow: 0 4px 16px rgba(46, 125, 50, 0.25);
+        }
+
+        .course-card.selected .course-name {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .course-card.selected::before {
+            content: "✓";
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 26px;
+            height: 26px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .course-card.selected::after {
+            content: attr(data-rank);
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            min-width: 26px;
+            height: 26px;
+            padding: 0 6px;
+            background: var(--accent);
+            color: white;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .course-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .course-card.selected .course-number {
+            background: var(--success);
+        }
+
+        .course-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .course-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .course-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .course-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .course-badge.skr {
+            background: rgba(21, 101, 192, 0.15);
+            color: #1565c0;
+        }
+
+        .course-badge.social {
+            background: rgba(230, 81, 0, 0.15);
+            color: #e65100;
+        }
+
+        .course-badge.new {
+            background: rgba(198, 40, 40, 0.15);
+            color: #c62828;
+        }
+
+        .custom-course-section {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-top: 16px;
+        }
+
+        .custom-course-title {
+            font-weight: 500;
+            color: var(--cat-custom);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .custom-course-title::before {
+            content: "✏️";
+            font-size: 0.9rem;
+        }
+
+        .custom-course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+
+        .custom-input-wrapper {
+            position: relative;
+        }
+
+        .custom-input-wrapper input {
+            width: 100%;
+            padding: 8px 12px 8px 35px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .custom-input-wrapper input::placeholder {
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+
+        .custom-input-wrapper input:focus {
+            outline: none;
+            border-color: var(--cat-custom);
+            box-shadow: 0 0 0 2px rgba(120, 144, 156, 0.2);
+        }
+
+        .custom-input-wrapper input.has-value {
+            border-color: var(--success);
+            background: rgba(46, 125, 50, 0.05);
+        }
+
+        .custom-input-wrapper .input-number {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--cat-custom);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .submit-section {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 180px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--success-light) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .btn-submit {
+            padding: 12px 32px;
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-submit.loading {
+            background: #999;
+            cursor: wait;
+        }
+
+        .btn-clear {
+            padding: 10px 20px;
+            background: white;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-clear:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--primary);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            font-weight: 500;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success { background: var(--success); }
+        .toast.warning { background: var(--accent); }
+        .toast.error { background: #d32f2f; }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                position: relative;
+                top: 0;
+                max-height: 350px;
+            }
+
+            .course-list-container {
+                max-height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .main-container {
+                padding: 12px;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .custom-course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-tabs {
+                justify-content: center;
+            }
+        }
+
+        .course-card.dragging {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1>แบบสอบถามความต้องการรายวิชา</h1>
+                <div class="header-subtitle">โครงการผลิตสื่อวีดิทัศน์การเรียนรู้ด้วยเทคโนโลยี AI - กรมส่งเสริมการเรียนรู้ (สกร.)</div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    เลือกแล้ว <strong id="selectedCount">0</strong> / 20
+                </div>
+                <div class="center-select">
+                    <label>ศูนย์ สกร.:</label>
+                    <select id="centerSelect" required>
+                        <option value="">-- เลือกศูนย์ --</option>
+                        <option value="ศูนย์ สกร. เขตบางกะปิ">ศูนย์ สกร. เขตบางกะปิ</option>
+                        <option value="ศูนย์ สกร. เขตลาดพร้าว">ศูนย์ สกร. เขตลาดพร้าว</option>
+                        <option value="ศูนย์ สกร. เขตห้วยขวาง">ศูนย์ สกร. เขตห้วยขวาง</option>
+                        <option value="ศูนย์ สกร. เขตวังทองหลาง">ศูนย์ สกร. เขตวังทองหลาง</option>
+                        <option value="ศูนย์ สกร. เขตบึงกุ่ม">ศูนย์ สกร. เขตบึงกุ่ม</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <aside class="left-panel">
+            <h2 class="panel-title">อันดับที่เลือก (1-20)</h2>
+            <div class="instructions">
+                <strong>คำชี้แจง:</strong>
+                <ul>
+                    <li>เลือกรายวิชาที่ศูนย์ต้องการ <strong>สูงสุด 20 วิชา</strong></li>
+                    <li>อันดับ 1 = ต้องการมากที่สุด</li>
+                    <li>ส่วนกลางจะคัดเลือกเหลือ 8 วิชา</li>
+                    <li>คลิกวิชาเพื่อเลือก หรือลากมาวาง</li>
+                </ul>
+            </div>
+            <div class="ranking-list" id="rankingList"></div>
+        </aside>
+
+        <section class="right-panel">
+            <div class="filter-bar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="ค้นหาหลักสูตร...">
+                </div>
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="all">ทั้งหมด <span class="count" id="countAll">135</span></button>
+                    <button class="category-tab" data-category="cat-1a">🍜 อาหารคาว</button>
+                    <button class="category-tab" data-category="cat-1b">🍰 อาหารว่าง</button>
+                    <button class="category-tab" data-category="cat-1c">☕ เครื่องดื่ม</button>
+                    <button class="category-tab" data-category="cat-2">💼 วิชาชีพ</button>
+                    <button class="category-tab" data-category="cat-3">🛒 ธุรกิจออนไลน์</button>
+                    <button class="category-tab" data-category="cat-4">🤖 AI/พัฒนาตนเอง</button>
+                    <button class="category-tab" data-category="cat-5">🌱 เกษตร</button>
+                    <button class="category-tab" data-category="cat-6">🚚 Delivery</button>
+                    <button class="category-tab" data-category="cat-7">📱 TikTok/Social</button>
+                    <button class="category-tab" data-category="cat-8">🔍 Google/FB Ads</button>
+                    <button class="category-tab" data-category="cat-9">🤖 AI ธุรกิจ</button>
+                    <button class="category-tab" data-category="cat-10">💼 งานรับจ้าง</button>
+                </div>
+            </div>
+
+            <div class="course-list-container" id="courseListContainer"></div>
+
+            <div class="custom-course-section">
+                <div class="custom-course-title">เพิ่มวิชาที่ต้องการเอง (สูงสุด 5 วิชา)</div>
+                <div class="custom-course-grid" id="customCourseGrid">
+                    <div class="custom-input-wrapper">
+                        <span class="input-number">1</span>
+                        <input type="text" placeholder="พิมพ์ชื่อวิชา..." data-custom-id="c1">
+                    </div>
+                    <div class="custom-input-wrapper">
+                        <span class="input-number">2</span>
+                        <input type="text" placeholder="พิมพ์ชื่อวิชา..." data-custom-id="c2">
+                    </div>
+                    <div class="custom-input-wrapper">
+                        <span class="input-number">3</span>
+                        <input type="text" placeholder="พิมพ์ชื่อวิชา..." data-custom-id="c3">
+                    </div>
+                    <div class="custom-input-wrapper">
+                        <span class="input-number">4</span>
+                        <input type="text" placeholder="พิมพ์ชื่อวิชา..." data-custom-id="c4">
+                    </div>
+                    <div class="custom-input-wrapper">
+                        <span class="input-number">5</span>
+                        <input type="text" placeholder="พิมพ์ชื่อวิชา..." data-custom-id="c5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <div class="progress-info">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text"><span id="progressPercent">0</span>% เสร็จสิ้น</span>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-clear" id="btnClear">🗑️ ล้างทั้งหมด</button>
+                    <button class="btn-submit" id="btnSubmit" disabled>ส่งแบบสอบถาม ✓</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">กำลังส่งข้อมูล...</div>
+        </div>
+    </div>
+
+    <script>
+        // ⚙️ ใส่ URL ของ Google Apps Script ที่นี่
+        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+        // 📚 Course Data - ตาม TOR 135 วิชา (จัดหมวดจริง)
+        const courses = [
+            // 【หมวด 1A】อาหารคาว (22 วิชา)
+            { id: 1, name: "แกงเขียวหวานไก่ม้วนกับแห้วจีน", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 2, name: "ต้มส้มปลาแรด", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 3, name: "แกงสามรส", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 4, name: "ยำถั่วงอก", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 5, name: "ปลากะพงม้วน", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 6, name: "แกงเหงาหงอด", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 7, name: "ยำสตรอเบอรี่น้ำมันงาม่อน", category: "cat-1a", subcat: "คาว", source: "สกร." },
+            { id: 8, name: "ข้าวปลาแกะ (Fish Rice)", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 9, name: "กะเพราหมูกรอบพรีเมี่ยม", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 10, name: "กะเพราทะเล/กะเพราถาด", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 11, name: "ไก่กรอบซอสเกาหลี", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 12, name: "ปีกไก่ทอดคลุกผง", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 13, name: "หมี่คลุก/เส้นเล็กคลุก", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 14, name: "เส้นเล็กไก่ฉีก", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 15, name: "Salmon Rice/ข้าวแซลมอน", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 16, name: "กุ้งแช่น้ำปลา (สูตรเจ้าดัง)", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 17, name: "แกงเขียวหวานสูตรดารา", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 18, name: "ไข่พะโล้สูตรดารา", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 19, name: "หมูปิ้งสูตรปลาร้า/น้ำพริก", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 20, name: "มาม่าหน้าโรงเรียน", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 21, name: "หมูกรอบสูตรดารา", category: "cat-1a", subcat: "คาว", source: "Social" },
+            { id: 22, name: "หมูทอดน้ำปลา", category: "cat-1a", subcat: "คาว", source: "Social" },
+
+            // 【หมวด 1A】น้ำพริกและเครื่องจิ้ม (5 วิชา)
+            { id: 23, name: "น้ำพริกเผาปลาแรดทรงเครื่อง", category: "cat-1a", subcat: "น้ำพริก", source: "สกร." },
+            { id: 24, name: "น้ำพริกปลาร้าลุยสวน", category: "cat-1a", subcat: "น้ำพริก", source: "สกร." },
+            { id: 25, name: "น้ำพริกมะสัง", category: "cat-1a", subcat: "น้ำพริก", source: "สกร." },
+            { id: 26, name: "น้ำพริกผักชีคุณท้าว", category: "cat-1a", subcat: "น้ำพริก", source: "สกร." },
+            { id: 27, name: "น้ำพริกใบชางาม่อน", category: "cat-1a", subcat: "น้ำพริก", source: "สกร." },
+
+            // 【หมวด 1A】อาหารจานเดียว (7 วิชา)
+            { id: 28, name: "ผัดไทยโบราณ", category: "cat-1a", subcat: "จานเดียว", source: "สกร." },
+            { id: 29, name: "ข้าวต้มเครื่อง", category: "cat-1a", subcat: "จานเดียว", source: "สกร." },
+            { id: 30, name: "หมี่กะทิ", category: "cat-1a", subcat: "จานเดียว", source: "สกร." },
+            { id: 31, name: "ขนมจีนแห้ง", category: "cat-1a", subcat: "จานเดียว", source: "สกร." },
+            { id: 32, name: "ข้าวมันส้มตำ", category: "cat-1a", subcat: "จานเดียว", source: "สกร." },
+            { id: 33, name: "ข้าวเผือก", category: "cat-1a", subcat: "จานเดียว", source: "สกร." },
+            { id: 34, name: "ข้าวแกงกะหรี่โฮมเมด", category: "cat-1a", subcat: "จานเดียว", source: "Social" },
+
+            // 【หมวด 1B】อาหารว่าง (11 วิชา)
+            { id: 35, name: "ขนมจีบหมู", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 36, name: "หมี่กรอบโบราณ", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 37, name: "ขนมช่อม่วงจีบนก", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 38, name: "จุ๋ยก๊วยทรงเครื่อง", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 39, name: "มันฝรั่งบดทอด", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 40, name: "ผัดกระท้อน", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 41, name: "ข้าวตังน้ำมันเมล็ดชา", category: "cat-1b", subcat: "ว่าง", source: "สกร." },
+            { id: 42, name: "ขนมครกสูตรไข่", category: "cat-1b", subcat: "ว่าง", source: "Social" },
+            { id: 43, name: "แซนวิช I-40 / ขนมปังปิ้งหน้าโรงเรียน", category: "cat-1b", subcat: "ว่าง", source: "Social" },
+            { id: 44, name: "เค้กกล้วยหอมชีส", category: "cat-1b", subcat: "ว่าง", source: "Social" },
+            { id: 45, name: "สังขยาชาไทย", category: "cat-1b", subcat: "ว่าง", source: "Social" },
+
+            // 【หมวด 1C】เครื่องดื่ม (11 วิชา)
+            { id: 46, name: "Dial-in Espresso / การชงกาแฟ", category: "cat-1c", subcat: "ดื่ม", source: "สกร." },
+            { id: 47, name: "Latte Art เบื้องต้น", category: "cat-1c", subcat: "ดื่ม", source: "สกร." },
+            { id: 48, name: "การทำเมนูกาแฟร้อน-เย็น-ปั่น", category: "cat-1c", subcat: "ดื่ม", source: "สกร." },
+            { id: 49, name: "การสร้างเมนู Signature Drink", category: "cat-1c", subcat: "ดื่ม", source: "สกร." },
+            { id: 50, name: "ชาไทย Specialty", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+            { id: 51, name: "ชานมไข่มุก", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+            { id: 52, name: "มัทฉะ/ชาเขียวนม", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+            { id: 53, name: "น้ำลำไยหม้อใหญ่", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+            { id: 54, name: "Cold Brew / กาแฟสกัดเย็น", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+            { id: 55, name: "สมูทตี้สุขภาพสไตล์ร้านดัง", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+            { id: 56, name: "ชาผลไม้สไตล์จีน", category: "cat-1c", subcat: "ดื่ม", source: "Social" },
+
+            // 【หมวด 2A】วิชาชีพหมวด สกร. (13 วิชา)
+            { id: 57, name: "การปฏิบัติการนวดไทย 60 ท่า", category: "cat-2", subcat: "นวด", source: "สกร." },
+            { id: 58, name: "หลักการนวดไทยขั้นพื้นฐาน", category: "cat-2", subcat: "นวด", source: "สกร." },
+            { id: 59, name: "เทคนิคการลงน้ำหนักในการนวดไทย", category: "cat-2", subcat: "นวด", source: "สกร." },
+            { id: 60, name: "การกำหนดมูลค่าสินค้า (ตั้งราคา)", category: "cat-2", subcat: "ธุรกิจ", source: "สกร." },
+            { id: 61, name: "การบริหารต้นทุนการผลิตสินค้า", category: "cat-2", subcat: "ธุรกิจ", source: "สกร." },
+            { id: 62, name: "การออกแบบบรรจุภัณฑ์", category: "cat-2", subcat: "ธุรกิจ", source: "สกร." },
+            { id: 63, name: "การจัดจำหน่ายตามความต้องการลูกค้า", category: "cat-2", subcat: "ธุรกิจ", source: "สกร." },
+            { id: 64, name: "การเย็บประกอบเสื้อผ้า", category: "cat-2", subcat: "หัตถกรรม", source: "สกร." },
+            { id: 65, name: "การออกแบบลายบาติก", category: "cat-2", subcat: "หัตถกรรม", source: "สกร." },
+            { id: 66, name: "การสานลวดลายผลิตภัณฑ์จากหวายเทียม", category: "cat-2", subcat: "หัตถกรรม", source: "สกร." },
+            { id: 67, name: "การสานลวดลายพื้นฐานไม้ไผ่", category: "cat-2", subcat: "หัตถกรรม", source: "สกร." },
+            { id: 68, name: "การมัดลายมัดหมี่", category: "cat-2", subcat: "หัตถกรรม", source: "สกร." },
+            { id: 69, name: "ขั้นตอนการหมักปลาเพื่อทำกะปิ", category: "cat-2", subcat: "แปรรูป", source: "สกร." },
+
+            // 【หมวด 2B】วิชาชีพอิสระ (3 วิชา)
+            { id: 70, name: "ไรเดอร์ Grab/Bolt/Robinhood", category: "cat-2", subcat: "อิสระ", source: "Social" },
+            { id: 71, name: "เปลี่ยนของไม่ใช้ ขายออนไลน์ สร้างรายได้", category: "cat-2", subcat: "อิสระ", source: "Social" },
+            { id: 72, name: "ถ่ายภาพอาหารออนไลน์ให้น่าทาน", category: "cat-2", subcat: "อิสระ", source: "Social" },
+
+            // 【หมวด 3】ธุรกิจออนไลน์ (13 วิชา)
+            { id: 73, name: "เปิดร้าน Shopee", category: "cat-3", subcat: "เปิดร้าน", source: "Social" },
+            { id: 74, name: "เปิดร้าน Lazada", category: "cat-3", subcat: "เปิดร้าน", source: "Social" },
+            { id: 75, name: "เปิดร้าน Facebook Marketplace", category: "cat-3", subcat: "เปิดร้าน", source: "Social" },
+            { id: 76, name: "TikTok Shop / ปักตะกร้า", category: "cat-3", subcat: "Affiliate", source: "Social" },
+            { id: 77, name: "Shopee Affiliate", category: "cat-3", subcat: "Affiliate", source: "Social" },
+            { id: 78, name: "Lazada Affiliate", category: "cat-3", subcat: "Affiliate", source: "Social" },
+            { id: 79, name: "Admin ร้านออนไลน์ / รับตอบแชท", category: "cat-3", subcat: "รับจ้าง", source: "Social" },
+            { id: 80, name: "ไลฟ์สด TikTok ขายของ", category: "cat-3", subcat: "รับจ้าง", source: "Social" },
+            { id: 81, name: "ขายของมือสอง Facebook", category: "cat-3", subcat: "Dropship", source: "Social" },
+            { id: 82, name: "Dropshipping จากจีน", category: "cat-3", subcat: "Dropship", source: "Social" },
+            { id: 83, name: "นำสินค้าชาวบ้านมาขายออนไลน์", category: "cat-3", subcat: "Dropship", source: "Social" },
+            { id: 84, name: "YouTube Channel สร้างรายได้", category: "cat-3", subcat: "Content", source: "Social" },
+            { id: 85, name: "เป็น Influencer มือใหม่", category: "cat-3", subcat: "Content", source: "Social" },
+
+            // 【หมวด 4A】พัฒนาตนเอง/AI (8 วิชา)
+            { id: 86, name: "AI ช่วยงานออฟฟิศ (ChatGPT/Claude)", category: "cat-4", subcat: "AI", source: "Social" },
+            { id: 87, name: "AI ในชีวิตประจำวัน", category: "cat-4", subcat: "AI", source: "Social" },
+            { id: 88, name: "AI สร้างคอนเทนต์ / เขียนบทความ", category: "cat-4", subcat: "AI", source: "Social" },
+            { id: 89, name: "AI สร้างภาพ (Midjourney/DALL-E)", category: "cat-4", subcat: "AI", source: "Social" },
+            { id: 90, name: "AI ตัดต่อวิดีโอ", category: "cat-4", subcat: "AI", source: "Social" },
+            { id: 91, name: "เครื่องมือแปลภาษาสำหรับแม่ค้าคุยกับลูกค้าต่างชาติ", category: "cat-4", subcat: "ทักษะ", source: "Social" },
+            { id: 92, name: "Canva สร้างสื่อง่ายๆ", category: "cat-4", subcat: "ทักษะ", source: "Social" },
+            { id: 93, name: "ทำบัญชีส่วนบุคคล", category: "cat-4", subcat: "ทักษะ", source: "Social" },
+
+            // 【หมวด 4B】ทักษะชีวิต ลดรายจ่าย (5 วิชา)
+            { id: 94, name: "การกินถูกวิธี เพื่อสุขภาพและประหยัด", category: "cat-4", subcat: "ลดรายจ่าย", source: "Social" },
+            { id: 95, name: "การนอนถูกเวลา ห่างไกลโรค", category: "cat-4", subcat: "ลดรายจ่าย", source: "Social" },
+            { id: 96, name: "การออกกำลังกายถูกวิธี ไม่ต้องพึ่งยา", category: "cat-4", subcat: "ลดรายจ่าย", source: "Social" },
+            { id: 97, name: "Meal Prep - วางแผนอาหาร 30 วัน ประหยัดค่าใช้จ่าย", category: "cat-4", subcat: "ลดรายจ่าย", source: "Social" },
+            { id: 98, name: "การเก็บวัตถุดิบให้อยู่ได้นาน (ผัก ผลไม้ เนื้อสัตว์)", category: "cat-4", subcat: "ลดรายจ่าย", source: "Social" },
+
+            // 【หมวด 5】เกษตรในครัวเรือน (7 วิชา)
+            { id: 99, name: "ปลูกผักสวนครัว (กะเพรา โหระพา ผักชี พริก)", category: "cat-5", subcat: "เกษตร", source: "Social" },
+            { id: 100, name: "ปลูกผักกินใบ (ผักบุ้ง คะน้า กวางตุ้ง)", category: "cat-5", subcat: "เกษตร", source: "Social" },
+            { id: 101, name: "ปลูกผักกินผล (มะเขือ แตงกวา ถั่วฝักยาว)", category: "cat-5", subcat: "เกษตร", source: "Social" },
+            { id: 102, name: "ปลูกมะเขือเทศในกระถาง", category: "cat-5", subcat: "เกษตร", source: "Social" },
+            { id: 103, name: "ปลูกต้นหอม กระเทียม ขิง ข่า ตะไคร้", category: "cat-5", subcat: "เกษตร", source: "Social" },
+            { id: 104, name: "เพาะถั่วงอกกินเอง", category: "cat-5", subcat: "เกษตร", source: "Social" },
+            { id: 105, name: "ปลูกผักไฮโดรโปนิกส์เบื้องต้น", category: "cat-5", subcat: "เกษตร", source: "Social" },
+
+            // 【หมวด 6】ร้านอาหาร Delivery (8 วิชา)
+            { id: 106, name: "สมัครและตั้งร้านบน GrabFood จากครัวบ้าน/คอนโด", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 107, name: "สมัครและตั้งร้านบน LINE MAN จากครัวบ้าน/คอนโด", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 108, name: "ตั้งเมนูและราคาให้เหมาะกับการขายเดลิเวอรี", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 109, name: "เลือกเขตจัดส่งและรับออเดอร์รอบแรก", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 110, name: "บริหารออเดอร์และรีวิวให้ร้านเดลิเวอรีดูน่าเชื่อถือ", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 111, name: "ออกแบบเมนูเดลิเวอรีให้ขายดีและไม่พังระหว่างขนส่ง", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 112, name: "คำนวณต้นทุนและตั้งราคาเมนูเดลิเวอรีให้มีกำไร", category: "cat-6", subcat: "Delivery", source: "Social" },
+            { id: 113, name: "วางระบบครัวและเตรียมวัตถุดิบสำหรับร้านเดลิเวอรี", category: "cat-6", subcat: "Delivery", source: "Social" },
+
+            // 【หมวด 7】TikTok และ Social Commerce (7 วิชา)
+            { id: 114, name: "เปิดร้าน TikTok Shop", category: "cat-7", subcat: "TikTok", source: "Social" },
+            { id: 115, name: "TikTok Affiliate สร้างรายได้", category: "cat-7", subcat: "TikTok", source: "Social" },
+            { id: 116, name: "เทคนิคไลฟ์สด TikTok (ตอน 1) - อุปกรณ์ เวลา", category: "cat-7", subcat: "TikTok", source: "Social" },
+            { id: 117, name: "เทคนิคไลฟ์สด TikTok (ตอน 2) - ดึงคนดู ปิดการขาย", category: "cat-7", subcat: "TikTok", source: "Social" },
+            { id: 118, name: "สร้าง Content TikTok ให้ยอดขึ้น", category: "cat-7", subcat: "TikTok", source: "Social" },
+            { id: 119, name: "LINE OA / LINE MyShop ขายของ", category: "cat-7", subcat: "Social", source: "Social" },
+            { id: 120, name: "ขายของผ่าน Instagram", category: "cat-7", subcat: "Social", source: "Social" },
+
+            // 【หมวด 8】Google และการตลาดออนไลน์ (6 วิชา)
+            { id: 121, name: "ทำให้ร้านขึ้นใน Google Maps ด้วย Google Business", category: "cat-8", subcat: "Google", source: "Social" },
+            { id: 122, name: "ปรับโปรไฟล์ร้านใน Google Maps ให้ค้นหาเจอง่าย", category: "cat-8", subcat: "Google", source: "Social" },
+            { id: 123, name: "ขายของกินในกลุ่ม Facebook ย่านบ้านให้ไม่โดนแบน", category: "cat-8", subcat: "Facebook", source: "Social" },
+            { id: 124, name: "Facebook Ads ยิงแอดขายของ (ตอน 1) - สร้างโฆษณา", category: "cat-8", subcat: "Facebook", source: "Social" },
+            { id: 125, name: "Facebook Ads ยิงแอดขายของ (ตอน 2) - ตั้งงบ วัดผล", category: "cat-8", subcat: "Facebook", source: "Social" },
+            { id: 126, name: "ขายอาหารในคอนโด/หมู่บ้าน", category: "cat-8", subcat: "Local", source: "Social" },
+
+            // 【หมวด 9】เครื่องมือ AI สำหรับธุรกิจ (3 วิชา)
+            { id: 127, name: "ใช้ Google Gemini เป็นเลขาออฟฟิศ", category: "cat-9", subcat: "AI-Biz", source: "Social" },
+            { id: 128, name: "Microsoft Copilot ช่วยงานออฟฟิศ", category: "cat-9", subcat: "AI-Biz", source: "Social" },
+            { id: 129, name: "ทำให้แบรนด์อยู่ในคำตอบ AI (GEO)", category: "cat-9", subcat: "AI-Biz", source: "Social" },
+
+            // 【หมวด 10】งานรับจ้างออนไลน์ (6 วิชา)
+            { id: 130, name: "ทักษะ Admin ตอบแชทร้านค้า", category: "cat-10", subcat: "งานรับจ้าง", source: "Social" },
+            { id: 131, name: "งาน Call Center เบื้องต้น", category: "cat-10", subcat: "งานรับจ้าง", source: "Social" },
+            { id: 132, name: "รับจ้างรีวิวสินค้า (UGC Creator)", category: "cat-10", subcat: "งานรับจ้าง", source: "Social" },
+            { id: 133, name: "ตัดต่อวิดีโอสั้นรับจ้าง", category: "cat-10", subcat: "งานรับจ้าง", source: "Social" },
+            { id: 134, name: "ขายของไทยไปจีนผ่าน Douyin", category: "cat-10", subcat: "จีน", source: "Social" },
+            { id: 135, name: "เปิดร้านบน Taobao / Tmall Global", category: "cat-10", subcat: "จีน", source: "Social" }
+        ];
+
+        const categoryInfo = {
+            'cat-1a': { name: '🍜 อาหารคาว/น้ำพริก/จานเดียว', header: 'cat-1a' },
+            'cat-1b': { name: '🍰 อาหารว่าง', header: 'cat-1b' },
+            'cat-1c': { name: '☕ เครื่องดื่ม', header: 'cat-1c' },
+            'cat-2': { name: '💼 วิชาชีพ สกร./อิสระ', header: 'cat-2a' },
+            'cat-3': { name: '🛒 ธุรกิจออนไลน์', header: 'cat-3' },
+            'cat-4': { name: '🤖 AI/พัฒนาตนเอง/ลดรายจ่าย', header: 'cat-4a' },
+            'cat-5': { name: '🌱 เกษตรในครัวเรือน', header: 'cat-5' },
+            'cat-6': { name: '🚚 ร้านอาหาร Delivery', header: 'cat-6' },
+            'cat-7': { name: '📱 TikTok และ Social Commerce', header: 'cat-7' },
+            'cat-8': { name: '🔍 Google และการตลาดออนไลน์', header: 'cat-8' },
+            'cat-9': { name: '🤖 เครื่องมือ AI สำหรับธุรกิจ', header: 'cat-9' },
+            'cat-10': { name: '💼 งานรับจ้างออนไลน์', header: 'cat-10' },
+            'custom': { name: '✏️ วิชาที่เพิ่มเอง', header: 'cat-custom' }
+        };
+
+        const categoryOrder = ['cat-1a', 'cat-1b', 'cat-1c', 'cat-2', 'cat-3', 'cat-4', 'cat-5', 'cat-6', 'cat-7', 'cat-8', 'cat-9', 'cat-10', 'custom'];
+
+        let rankings = new Array(20).fill(null);
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let customCourses = [];
+        let allCourses = [...courses];
+
+        const rankingList = document.getElementById('rankingList');
+        const courseListContainer = document.getElementById('courseListContainer');
+        const searchInput = document.getElementById('searchInput');
+        const selectedCountEl = document.getElementById('selectedCount');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const btnClear = document.getElementById('btnClear');
+        const toast = document.getElementById('toast');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const customInputs = document.querySelectorAll('[data-custom-id]');
+
+        function init() {
+            renderRankings();
+            renderCourses();
+            setupEventListeners();
+        }
+
+        function renderRankings() {
+            rankingList.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const slot = document.createElement('div');
+                slot.className = `ranking-slot ${rankings[i] ? 'filled' : ''}`;
+                slot.dataset.rank = i + 1;
+                slot.draggable = !!rankings[i];
+
+                const course = rankings[i] ? allCourses.find(c => c.id === rankings[i]) : null;
+
+                slot.innerHTML = `
+                    <div class="ranking-number">${i + 1}</div>
+                    <div class="ranking-content">${course ? course.name : 'ว่าง'}</div>
+                    ${course ? '<button class="ranking-remove">✕</button>' : ''}
+                `;
+
+                if (rankings[i]) {
+                    slot.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({ fromRank: i + 1, courseId: rankings[i] }));
+                        slot.classList.add('dragging');
+                    });
+                    slot.addEventListener('dragend', () => slot.classList.remove('dragging'));
+                }
+
+                slot.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    slot.classList.add('drag-over');
+                });
+                slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+                slot.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    slot.classList.remove('drag-over');
+                    try {
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        handleDrop(data, i + 1);
+                    } catch (err) {}
+                });
+
+                const removeBtn = slot.querySelector('.ranking-remove');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeFromRanking(i);
+                    });
+                }
+
+                rankingList.appendChild(slot);
+            }
+        }
+
+        function renderCourses() {
+            courseListContainer.innerHTML = '';
+
+            let filtered = allCourses.filter(c => {
+                let matchCategory = currentCategory === 'all' || c.category === currentCategory;
+                const matchSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchCategory && matchSearch;
+            });
+
+            document.getElementById('countAll').textContent = allCourses.length;
+
+            const grouped = {};
+            filtered.forEach(course => {
+                if (!grouped[course.category]) {
+                    grouped[course.category] = [];
+                }
+                grouped[course.category].push(course);
+            });
+
+            categoryOrder.forEach(cat => {
+                if (grouped[cat] && grouped[cat].length > 0) {
+                    const section = document.createElement('div');
+                    section.className = 'category-section';
+
+                    const header = document.createElement('div');
+                    header.className = `category-header ${categoryInfo[cat].header}`;
+                    header.innerHTML = `
+                        ${categoryInfo[cat].name}
+                        <span class="course-count">${grouped[cat].length} วิชา</span>
+                    `;
+                    section.appendChild(header);
+
+                    const grid = document.createElement('div');
+                    grid.className = 'course-grid';
+
+                    grouped[cat].forEach(course => {
+                        const rankIndex = rankings.indexOf(course.id);
+                        const isSelected = rankIndex !== -1;
+
+                        const card = document.createElement('div');
+                        card.className = `course-card ${isSelected ? 'selected' : ''}`;
+                        card.draggable = true;
+                        card.dataset.courseId = course.id;
+                        if (isSelected) card.dataset.rank = `#${rankIndex + 1}`;
+
+                        let badges = '';
+                        if (course.source === 'สกร.') {
+                            badges += '<span class="course-badge skr">สกร.</span>';
+                        } else {
+                            badges += '<span class="course-badge social">Social</span>';
+                        }
+
+                        card.innerHTML = `
+                            <div class="course-number">${course.id}</div>
+                            <div class="course-info">
+                                <div class="course-name">${course.name}</div>
+                                <div class="course-badges">${badges}</div>
+                            </div>
+                        `;
+
+                        card.addEventListener('dragstart', (e) => {
+                            e.dataTransfer.setData('text/plain', JSON.stringify({ courseId: course.id }));
+                            card.classList.add('dragging');
+                        });
+                        card.addEventListener('dragend', () => card.classList.remove('dragging'));
+
+                        card.addEventListener('click', (e) => {
+                            toggleCourseSelection(course.id);
+                        });
+
+                        grid.appendChild(card);
+                    });
+
+                    section.appendChild(grid);
+                    courseListContainer.appendChild(section);
+                }
+            });
+        }
+
+        function handleDrop(data, targetRank) {
+            const { courseId, fromRank } = data;
+            const targetIndex = targetRank - 1;
+
+            if (fromRank) {
+                const fromIndex = fromRank - 1;
+                const temp = rankings[targetIndex];
+                rankings[targetIndex] = rankings[fromIndex];
+                rankings[fromIndex] = temp;
+            } else {
+                const existingIndex = rankings.indexOf(courseId);
+                if (existingIndex !== -1) {
+                    const temp = rankings[targetIndex];
+                    rankings[targetIndex] = courseId;
+                    rankings[existingIndex] = temp;
+                } else {
+                    if (rankings[targetIndex]) {
+                        for (let i = 19; i > targetIndex; i--) {
+                            rankings[i] = rankings[i - 1];
+                        }
+                    }
+                    rankings[targetIndex] = courseId;
+                }
+            }
+
+            updateUI();
+            showToast(`จัดอันดับ ${targetRank} เรียบร้อย`, 'success');
+        }
+
+        function toggleCourseSelection(courseId) {
+            const existingIndex = rankings.indexOf(courseId);
+            if (existingIndex !== -1) {
+                removeFromRanking(existingIndex);
+            } else {
+                const emptyIndex = rankings.findIndex(r => r === null);
+                if (emptyIndex !== -1) {
+                    rankings[emptyIndex] = courseId;
+                    updateUI();
+                    showToast(`เพิ่มเป็นอันดับ ${emptyIndex + 1}`, 'success');
+                } else {
+                    showToast('เลือกครบ 20 อันดับแล้ว!', 'warning');
+                }
+            }
+        }
+
+        function removeFromRanking(index) {
+            const course = allCourses.find(c => c.id === rankings[index]);
+            rankings[index] = null;
+            updateUI();
+            if (course) showToast(`ลบ "${course.name}" ออกแล้ว`);
+        }
+
+        function updateUI() {
+            renderRankings();
+            renderCourses();
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const count = rankings.filter(r => r !== null).length;
+            selectedCountEl.textContent = count;
+            const percent = Math.round((count / 20) * 100);
+            progressFill.style.width = `${percent}%`;
+            progressPercent.textContent = percent;
+            btnSubmit.disabled = count < 20;
+        }
+
+        function showToast(message, type = '') {
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function setupEventListeners() {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderCourses();
+            });
+
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentCategory = tab.dataset.category;
+                    renderCourses();
+                });
+            });
+
+            customInputs.forEach((input, idx) => {
+                input.addEventListener('input', () => {
+                    updateCustomCourses();
+                    input.classList.toggle('has-value', input.value.trim() !== '');
+                });
+            });
+
+            btnClear.addEventListener('click', () => {
+                rankings = new Array(20).fill(null);
+                customInputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('has-value');
+                });
+                updateCustomCourses();
+                updateUI();
+                showToast('ล้างข้อมูลทั้งหมดแล้ว');
+            });
+
+            btnSubmit.addEventListener('click', handleSubmit);
+        }
+
+        function updateCustomCourses() {
+            allCourses = allCourses.filter(c => c.category !== 'custom');
+            customCourses = [];
+
+            customInputs.forEach((input, idx) => {
+                const name = input.value.trim();
+                if (name) {
+                    const customId = 1000 + idx;
+                    customCourses.push({ id: customId, name, category: 'custom', source: 'กรอกเอง' });
+                    allCourses.push({ id: customId, name, category: 'custom', source: 'กรอกเอง' });
+                }
+            });
+
+            renderCourses();
+        }
+
+        async function handleSubmit() {
+            const center = document.getElementById('centerSelect').value;
+            if (!center) {
+                showToast('กรุณาเลือกศูนย์ สกร.', 'warning');
+                return;
+            }
+
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                showToast('⚠️ กรุณาใส่ Google Apps Script URL', 'error');
+                console.error('❌ ยังไม่ได้ตั้งค่า GOOGLE_SCRIPT_URL');
+                return;
+            }
+
+            const timestamp = new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+            const coursesSelected = rankings.map((id, idx) => {
+                if (!id) return null;
+                const course = allCourses.find(c => c.id === id);
+                return {
+                    rank: idx + 1,
+                    courseId: id,
+                    courseName: course ? course.name : '',
+                    source: course ? course.source : ''
+                };
+            }).filter(c => c !== null);
+
+            const formData = {
+                timestamp: timestamp,
+                center: center,
+                totalSelected: coursesSelected.length,
+                rank1: coursesSelected.find(c => c.rank === 1)?.courseName || '',
+                rank2: coursesSelected.find(c => c.rank === 2)?.courseName || '',
+                rank3: coursesSelected.find(c => c.rank === 3)?.courseName || '',
+                rank4: coursesSelected.find(c => c.rank === 4)?.courseName || '',
+                rank5: coursesSelected.find(c => c.rank === 5)?.courseName || '',
+                rank6: coursesSelected.find(c => c.rank === 6)?.courseName || '',
+                rank7: coursesSelected.find(c => c.rank === 7)?.courseName || '',
+                rank8: coursesSelected.find(c => c.rank === 8)?.courseName || '',
+                rank9: coursesSelected.find(c => c.rank === 9)?.courseName || '',
+                rank10: coursesSelected.find(c => c.rank === 10)?.courseName || '',
+                rank11: coursesSelected.find(c => c.rank === 11)?.courseName || '',
+                rank12: coursesSelected.find(c => c.rank === 12)?.courseName || '',
+                rank13: coursesSelected.find(c => c.rank === 13)?.courseName || '',
+                rank14: coursesSelected.find(c => c.rank === 14)?.courseName || '',
+                rank15: coursesSelected.find(c => c.rank === 15)?.courseName || '',
+                rank16: coursesSelected.find(c => c.rank === 16)?.courseName || '',
+                rank17: coursesSelected.find(c => c.rank === 17)?.courseName || '',
+                rank18: coursesSelected.find(c => c.rank === 18)?.courseName || '',
+                rank19: coursesSelected.find(c => c.rank === 19)?.courseName || '',
+                rank20: coursesSelected.find(c => c.rank === 20)?.courseName || '',
+                customCourse1: customCourses[0]?.name || '',
+                customCourse2: customCourses[1]?.name || '',
+                customCourse3: customCourses[2]?.name || '',
+                customCourse4: customCourses[3]?.name || '',
+                customCourse5: customCourses[4]?.name || ''
+            };
+
+            console.log('📤 กำลังส่งข้อมูล:', formData);
+
+            loadingOverlay.classList.add('show');
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('loading');
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                console.log('✅ ส่งข้อมูลสำเร็จ');
+                loadingOverlay.classList.remove('show');
+                btnSubmit.classList.remove('loading');
+
+                showToast('ส่งแบบสอบถามสำเร็จ! 🎉', 'success');
+
+                setTimeout(() => {
+                    rankings = new Array(20).fill(null);
+                    customInputs.forEach(input => {
+                        input.value = '';
+                        input.classList.remove('has-value');
+                    });
+                    document.getElementById('centerSelect').value = '';
+                    updateCustomCourses();
+                    updateUI();
+                    showToast('พร้อมกรอกแบบสอบถามใหม่', 'success');
+                }, 2000);
+
+            } catch (error) {
+                console.error('❌ เกิดข้อผิดพลาด:', error);
+                loadingOverlay.classList.remove('show');
+                btnSubmit.disabled = false;
+                btnSubmit.classList.remove('loading');
+                showToast('เกิดข้อผิดพลาด กรุณาลองใหม่', 'error');
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
